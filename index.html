@@ -1,0 +1,473 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMP (Random Music Player)</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+      audio{
+    display: none;
+}
+*{
+    outline: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.screen{
+    height: 100%;
+    background:rgb(11 0 54);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:5%;
+    overflow: hidden;
+}
+.play{
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid white;
+    color: #fff;
+    background: #000
+}
+.play {
+   box-shadow: 3px 3px 8px #000000,
+
+   -3px -3px 5px rgba(0,0,0, 0.4);
+}
+.play:hover{
+    background: rgb(0, 0, 0,.7);
+    transform: scale(1.1);
+}
+img{
+    position: relative;
+    left: 25%;
+    width: 50%;
+    border: 3px solid #0053ff;
+    border-radius: 20px;
+    object-fit: cover;
+    z-index: 2;
+}
+.img{
+    position: relative;
+}
+.text-info{
+    position: absolute;
+    bottom:0%;
+    left: 25%;
+    z-index: 2;
+    color: rgb(69 160 242);
+    background-color: #00000040;
+    width: 50%;
+    text-align: center;
+    border-radius: 0 0 20px 20px;
+    border-top: 3px solid #0053ff;
+}
+.text-info h1,.text-info h2{
+    font-size: 1.5rem;
+    white-space:pre;
+    text-overflow:ellipsis;
+}
+.text-info h2{
+    font-weight:500;
+}
+img::after{
+    filter: blur(1rem);
+}
+.range{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid white;
+    padding-top: 2%;
+}
+.range input{
+    width: 45%;
+    transition: 1s;
+}
+
+
+
+
+
+
+#timeRange,#volume {
+    -webkit-appearance: none;
+    height: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 10px;
+  }
+  #timeRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgb(247, 0, 0);
+    cursor: pointer;
+  }
+  #volume::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: rgb(247, 0, 0);
+    cursor: pointer;
+  }
+  
+  #timeRange::-moz-range-thumb,#volume::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.volume{
+    position: absolute;
+    right: 2%;
+    bottom: 0%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    color: white;
+}
+.timeController{
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    color: white;
+    font-size: 1.2rem;
+    padding-top: 2%;
+}
+.control{
+    display: flex;
+    width: 30%;
+    justify-content: space-evenly;
+    align-items: center;
+    background: rgba(255, 255, 255);
+    border: 1px solid white;
+    padding: 1% 5%;
+    border-radius: 20px;
+    box-shadow: 5px 2px 10px #000 inset;
+    z-index: 1;
+}
+.back{
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width: auto;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.back p,.back i,.download i{
+    font-size: 2rem;
+}
+.back:hover,.download:hover{
+    background: rgba(255, 255, 255, 0.1);
+}
+.download{
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    width: auto;
+    color: white;
+    cursor: pointer;
+    border-radius: 10px;
+    padding:5px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.circle-1{
+    position: absolute;
+    width: 20vh;
+    height:20vh;
+    background:radial-gradient(rgba(255, 255, 255, 0.2),rgba(0, 0, 0,.2));
+    bottom: 0%;
+    left: 5%;
+    border-radius: 50%;
+    animation: anim infinite 5s linear;
+    overflow: hidden;
+    z-index: 0;
+}
+.circle-2{
+    position: absolute;
+    width: 20vh;
+    height:20vh;
+    right: 5%;
+    bottom: 0%;
+    background:radial-gradient(rgba(255, 255, 255, 0.2),rgba(0, 0, 0,.2));
+    border-radius: 50%;
+    animation: anim1 infinite 5s linear 1.25s;
+    overflow: hidden;
+    z-index: 0;
+}
+.circle-3{
+    position: absolute;
+    width: 20vh;
+    height:20vh;
+    background:radial-gradient(rgba(255, 255, 255, 0.2),rgba(0, 0, 0,.2));
+    top: 20%;
+    left: 10%;
+    border-radius: 50%;
+    animation: anim infinite 5s linear 2.5s;
+    overflow: hidden;
+    z-index: 0;
+}
+.circle-4{
+    position: absolute;
+    width: 20vh;
+    height:20vh;
+    right: 10%;
+    top: 20%;
+    background:radial-gradient(rgba(255, 255, 255, 0.2),rgba(0, 0, 0,.2));
+    border-radius: 50%;
+    animation: anim1 infinite 5s linear 3.75s;
+    overflow: hidden;
+    z-index: 0;
+}
+@keyframes anim {
+    0%{
+        transform: translate(0%,0) scale(0);
+    }
+    50%{
+        transform: translate(50%,-100%) scale(1.2);
+    }
+    100%{
+        transform: translate(0%,0) scale(0);
+    }
+}
+@keyframes anim1 {
+    0%{
+        transform: translate(0%,0) scale(0);
+    }
+    50%{
+        transform: translate(-50%,-100%) scale(1.2);
+    }
+    100%{
+        transform: translate(0%,0) scale(0);
+    }
+}
+@media screen and (max-width:1025px) {
+    .play{
+        height: 70px;
+        width: 70px;
+        font-size: 1rem;
+    }
+    img{
+        left: 5%;
+        width: 90%;
+     }
+     .range input{
+        width: 90%;
+    }
+    .control{
+        left: 10%;
+        width: 80%;
+    }
+    .timeController{
+        width: 90%;
+    }
+    .text-info{
+        width: 90%;
+        left: 5%;
+    }
+}
+@media screen and (max-width:576px) {
+    .volume{
+        display: none;
+    }
+    img{
+        height: 50vh;
+    }
+    .back i, .back p,.download i{
+        font-size: 1.5rem;
+    }
+    .play:hover{
+        background: rgb(0, 0, 0);
+        transform: scale(1);
+    }
+    .text-info h1{
+        font-size: 1.1rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="audio" class="screen">
+       <div class="img">
+        <img src="./img/back-image.jpg" alt="img">
+        <div class="text-info">
+          <h1 id="musicName">Random Music Player (RMP)</h1>
+          <p id="musicNumber">Music:</p>
+          <h2 id="autor"> Autor : <a href="https://t.me/Developer0772" target="_blank" style="text-decoration: none;">Developer</a></h2>
+        </div>
+       </div>
+        <div class="range">
+          <input type="range" name="time" id="timeRange" value="0" oninput="timeCurrent()">
+          <div class="timeController">
+            <p id="timeNow"></p>
+            <p id="timeTotal"></p>
+          </div>
+      </div>
+    <div class="control">
+      <button class="play next" id="previous" onclick="select(-1)"><i class="material-icons">skip_previous</i></button>
+      <button class="play player" onclick="listen()"><i class="material-icons" id="pause">play_arrow</i></button>
+      <button class="play prev" onclick="select(1)"><i class="material-icons">skip_next</i></button>
+    </div>
+    </div>
+    <div class="back" onclick="back()">
+      <i class="material-icons">navigate_before</i>
+      <p>Back</p>
+    </div>
+    <div class="download" >
+        <a id="downlink"><i class="material-icons"  onclick="download()">file_download</i></a>
+    </div>
+    <div class="circle-1">
+
+    </div>
+    <div class="circle-2">
+      
+    </div>
+    <div class="circle-3">
+
+    </div>
+    <div class="circle-4">
+      
+    </div>
+    <div class="volume">
+      <i class="material-icons">volume_up</i>
+      <input type="range" name="volume" id="volume" oninput="volum()">
+      <p id="volumeValue"></p>
+    </div>
+</body>
+<script>
+  var audio=document.createElement('audio'),
+href="https://www.mp3lar.com/load/";
+var number=16000, 
+musicNumber=document.getElementById('musicNumber');
+var prevs=document.getElementById('previous');
+audio.setAttribute('preload','none')
+audio.setAttribute('src',`${href}0-0-1-${number}-20`);
+musicNumber.innerText+=number-15999;
+function select(n){
+    musicNumber.innerText="Music:"
+    number=number+n;
+    musicNumber.innerText+=number-15999;
+    if(number<=15999){
+       prevs.style.display='none'
+    }
+    else{
+        prevs.style.display=''
+    }
+    audio.setAttribute('src',`${href}0-0-1-${number}-20`);
+
+}
+var div=document.getElementById('audio');
+div.appendChild(audio);
+audio.setAttribute('controls','');
+var playPause=document.getElementById('pause')
+var timer=document.getElementById('timeRange');
+function listen(){
+    if (audio.paused) {
+        audio.play();
+        playPause.innerText='pause'
+
+        } else {
+       audio.pause();
+       playPause.innerText='play_arrow'
+        }
+}
+function timeCurrent(){
+    audio.currentTime=timer.value;
+    timer.setAttribute('max',`${audio.duration}`)
+ }
+
+
+
+function runner(){
+    var sec=`${Math.ceil(audio.currentTime)%60}`,
+    min=`${Math.floor(audio.currentTime/60)}`,
+    sec1=`${Math.ceil(audio.duration%60)}`,
+    min1=`${Math.floor(audio.duration/60)}`;
+   if(sec1==='NaN'){
+       sec1=0;
+       min1=0;
+   }
+    if(sec1<10){
+        sec1=`0`+sec1;
+    }
+    if(sec<10){
+        sec=`0`+sec;
+    }
+    timer.value=`${audio.currentTime}`;
+    timer.setAttribute('max',`${audio.duration}`)
+    var timeNow=document.getElementById('timeNow'),
+timeTotal=document.getElementById('timeTotal')
+timeNow.innerText=min+":"+sec;    
+timeTotal.innerText=min1+":"+sec1;
+if(timeNow.innerText==timeTotal.innerText){
+   audio.currentTime=0;
+   playPause.innerText='play_arrow'
+}
+else{
+    playPause.innerText='pause'
+}
+}
+setInterval(() => {
+    runner();
+}, 1000);
+
+var down=document.getElementById('downlink');
+function download(){
+    down.setAttribute('href',`${href}0-0-1-${number}-20`);
+    down.setAttribute('download',`music${number-1600}.mp3`)
+
+}
+function back(){
+    window.close()
+}
+
+var volumeMusic=document.getElementById('volume')
+volumeValue=document.getElementById('volumeValue')
+function volum(){
+audio.volume=volumeMusic.value/100;
+volumeValue.innerText=volumeMusic.value;
+}
+volum();
+</script>
+</html>
