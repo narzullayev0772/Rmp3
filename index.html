@@ -376,19 +376,24 @@ img::after{
     </div>
 </body>
 <script>
+  
   var audio=document.createElement('audio'),
-href="https://www.mp3lar.com/load/";
-var number=16000, 
+href="http://www.tarona.net/load/";
+const lenx=10600;
+
+var number=10601,
 musicNumber=document.getElementById('musicNumber');
 var prevs=document.getElementById('previous');
-audio.setAttribute('preload','none')
+audio.setAttribute('preload','metadate')
 audio.setAttribute('src',`${href}0-0-1-${number}-20`);
-musicNumber.innerText+=number-15999;
+musicNumber.innerText+=number-lenx;
 function select(n){
+    audio.pause();
+    playPause.innerText='play_arrow'
     musicNumber.innerText="Music:"
     number=number+n;
-    musicNumber.innerText+=number-15999;
-    if(number<=15999){
+    musicNumber.innerText+=number-lenx;
+    if(number<=lenx){
        prevs.style.display='none'
     }
     else{
@@ -415,6 +420,12 @@ function listen(){
 function timeCurrent(){
     audio.currentTime=timer.value;
     timer.setAttribute('max',`${audio.duration}`)
+    
+    // if(audio.currentTime==0){
+    //     audio.pause();
+    //    playPause.innerText='play_arrow'
+    // }
+    console.log(audio.currentTime);
  }
 
 
@@ -442,11 +453,8 @@ timeNow.innerText=min+":"+sec;
 timeTotal.innerText=min1+":"+sec1;
 if(timeNow.innerText==timeTotal.innerText){
    audio.currentTime=0;
-   playPause.innerText='play_arrow'
 }
-else{
-    playPause.innerText='pause'
-}
+
 }
 setInterval(() => {
     runner();
